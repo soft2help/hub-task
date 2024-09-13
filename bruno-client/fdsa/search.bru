@@ -1,0 +1,22 @@
+meta {
+  name: search
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/search
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+  "hotelId": 1,
+  "checkIn": "2018-10-20",
+  "checkOut": "2018-10-25",
+  "numberOfGuests": 3,
+  "numberOfRooms": 2,
+  "currency": "EUR"
+  }
+}

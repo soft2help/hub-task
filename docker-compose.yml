@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Redis Service
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - symfony-network
+
+  # MySQL Service
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: hub_task
+      MYSQL_USER: hub_user
+      MYSQL_PASSWORD: HubPassword2024*_
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - symfony-network
+
+  # Symfony / PHP Service
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - .:/var/www/html
+    networks:
+      - symfony-network
+    depends_on:
+      - mysql
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql://hub_user:HubPassword2024*_@mysql:3306/hub_task
+
+  
+volumes:
+  mysql_data:
+
+networks:
+  symfony-network:
+    driver: bridge
