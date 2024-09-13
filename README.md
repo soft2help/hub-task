@@ -11,8 +11,8 @@ This solution addresses the Moon Hotels Task, which focuses on implementing a se
 ## Installation
 
 ```bash
-git clone <repo_url>
-cd <project_directory>
+git clone git@github.com:soft2help/hub-task.git
+cd hub-task
 docker-compose up --build -d
 ```
 
@@ -23,6 +23,11 @@ docker-compose exec php php bin/console doctrine:migrations:migrate
 docker-compose exec php php bin/console doctrine:fixtures:load
 ```
 
+if for some reason you have any trouble ensure that all dependencies are installed
+```bash
+docker-compose exec php composer install
+```
+and run again migrations and fixtures
 
 ### Testing
 
@@ -32,7 +37,13 @@ docker-compose exec php bin/phpunit
 
 ### Access and test api
 
-Visit **http://localhost:8000/api/doc** to view the Swagger UI, and test endpoint.
+Visit **http://localhost:8000/api/doc** to view the Swagger UI.
+
+to check endpoint expand it and click on "Try it out"
+
+you can change request body or direct perform "Execute"
+
+and check response
 
 
 ## Topics Covered
@@ -58,18 +69,3 @@ Visit **http://localhost:8000/api/doc** to view the Swagger UI, and test endpoin
 * **Trait Reusability:** A trait (ValidatesRequest) is used to centralize deserialization and validation logic, ensuring that controllers can focus on business logic while reusing common functionality, thereby reducing duplication.
 
 * **Transformation of DTOs:** The DTOs are equipped with methods to transform them into associative arrays, making it easier to work with them in different parts of the application, such as passing data to services or repositories.
-
-
-
-docker-compose down
-docker-compose up --build -d
-
-docker-compose exec php php bin/console doctrine:database:create
-docker-compose exec php php bin/console doctrine:migrations:migrate
-docker-compose exec php php bin/console doctrine:fixtures:load
-docker-compose exec php bin/phpunit
-
-
-check endpoint
-
-http://localhost:8000/api/doc
